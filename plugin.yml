@@ -1,0 +1,8 @@
+name: XcraftQuest
+main: me.Engelier.XcraftQuest.XcraftQuest
+version: 0.3
+author: Engelier
+commands:
+  x:
+    description: XcraftQuest Command
+    usage: /<command>
