@@ -1,4 +1,4 @@
-package me.Engelier.XcraftQuest;
+package de.xcraft.engelier.quest;
 
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;

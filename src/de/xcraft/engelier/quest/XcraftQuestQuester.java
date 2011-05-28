@@ -1,4 +1,4 @@
-package me.Engelier.XcraftQuest;
+package de.xcraft.engelier.quest;
 
 import java.io.*;
 import java.util.HashMap;

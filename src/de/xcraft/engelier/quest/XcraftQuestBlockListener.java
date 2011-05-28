@@ -1,4 +1,4 @@
-package me.Engelier.XcraftQuest;
+package de.xcraft.engelier.quest;
 
 import org.bukkit.event.block.*;
 
