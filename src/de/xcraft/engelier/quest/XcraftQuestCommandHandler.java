@@ -22,6 +22,7 @@ public class XcraftQuestCommandHandler {
 		player.sendMessage(ChatColor.LIGHT_PURPLE + "-> " + ChatColor.GREEN + "/quest info " + ChatColor.WHITE + "| " + ChatColor.AQUA + plugin.lang.getString("command_help_info", "Resends you your quest info/progress"));
 		player.sendMessage(ChatColor.LIGHT_PURPLE + "-> " + ChatColor.GREEN + "/quest drop " + ChatColor.WHITE + "| " + ChatColor.AQUA + plugin.lang.getString("command_help_drop", "Drops your curren quest"));
 		player.sendMessage(ChatColor.LIGHT_PURPLE + "-> " + ChatColor.GREEN + "/quest stats " + ChatColor.WHITE + "| " + ChatColor.AQUA + plugin.lang.getString("command_help_stats", "Show your stored info. Try it!"));
+		player.sendMessage(ChatColor.LIGHT_PURPLE + "-> " + ChatColor.GREEN + "/quest top <#>" + ChatColor.WHITE + "| " + ChatColor.AQUA + plugin.lang.getString("command_help_top", "Shows the <#> top questers of your server"));
 	}
 	
 	public void printAdminUsage(Player player) {
@@ -50,7 +51,7 @@ public class XcraftQuestCommandHandler {
 		this.commandArgs = args;
 		
 		if (command.equals("give") || command.equals("info") || command.equals("done") || command.equals("stats")) {
-			if (!hasPermission(player, "XcraftQuest.quest.canQuest", false))
+			if (!hasPermission(player, "XcraftQuest.quest.quest", false))
 				return plugin.lang.getString("no_permission", "You don't have permission to use this command");
 
 			if (command.equals("give")) {
@@ -63,10 +64,19 @@ public class XcraftQuestCommandHandler {
 				plugin.quester.showStats(player, plugin.quester.getQuester(player.getName()));
 			}
 		} else if(command.equals("drop")) {
-			if (!hasPermission(player, "XcraftQuest.quest.canDrop", false))
+			if (!hasPermission(player, "XcraftQuest.quest.drop", false))
 				return plugin.lang.getString("no_permission", "You don't have permission to use this command");
 
 			plugin.quester.getQuester(player.getName()).dropQuest();
+		} else if(command.equals("top")) {
+			if (!hasPermission(player, "XcraftQuest.quest.top", false))
+				return plugin.lang.getString("no_permission", "You don't have permission to use this command");
+			
+			Integer count = null;
+			if (commandArgs.length > 1)
+				try { count = new Integer(commandArgs[1]);  } catch(Exception ex) {}
+			
+			plugin.quester.showTop(player, count);
 		} else if(command.equals("admin")) {
 			if (commandArgs[1].equals("reload")) {
 				if (!hasPermission(player, "XcraftQuest.admin.reload", true))

@@ -8,6 +8,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.yaml.snakeyaml.Yaml;
 
+import de.xcraft.engelier.utils.MapSorter;
+
 public class XcraftQuestQuester {
 	private XcraftQuest plugin = null;
 	private Map<String, XcraftQuestQuesterPlayer> questers = new HashMap<String, XcraftQuestQuesterPlayer>();
@@ -116,5 +118,29 @@ public class XcraftQuestQuester {
 			player.sendMessage(plugin.lang.getString("active_quest", "Active Quest") + ": " + plugin.quests.quests.getString(quester.hasQuest + "/name", "null"));
 		else
 			player.sendMessage(plugin.lang.getString("does_not_have_quest", "You don't have an active quest"));
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void showTop(Player player, Integer count) {
+		if (count == null)
+			count = 5;
+		
+		Map<String, Integer> expMap = new HashMap<String, Integer>();
+		for (Map.Entry<String, XcraftQuestQuesterPlayer> entry: questers.entrySet()) {
+			expMap.put(entry.getKey(), entry.getValue().experience);
+		}
+		
+		expMap = new MapSorter(expMap).sortByValueRev();
+		
+		player.sendMessage(ChatColor.LIGHT_PURPLE + "Top " + count + " Questers");
+		
+		int i = 0;
+		for (Map.Entry<String, Integer> entry: expMap.entrySet()) {
+			i++;
+			player.sendMessage(String.format("%5d", i) + ": " + ChatColor.GOLD + entry.getKey() + ChatColor.AQUA + " (" + entry.getValue() + " " + plugin.lang.getString("experience", "Experience") + ")");
+			
+			if (i == count)
+				break;
+		}
 	}
 }	
