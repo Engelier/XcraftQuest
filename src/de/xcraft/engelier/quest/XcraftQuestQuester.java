@@ -88,10 +88,12 @@ public class XcraftQuestQuester {
 	}
 	
 	public Boolean hasQuester(String name) {
+		name = plugin.getServer().getPlayer(name).getName();
 		return questers.containsKey(name);
 	}
 	
 	public XcraftQuestQuesterPlayer getQuester(String name) {
+		name = plugin.getServer().getPlayer(name).getName();
 		if (!questers.containsKey(name)) {
 			questers.put(name, new XcraftQuestQuesterPlayer(name, plugin));
 		}
