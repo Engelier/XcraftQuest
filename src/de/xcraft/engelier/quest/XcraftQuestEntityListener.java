@@ -21,6 +21,8 @@ public class XcraftQuestEntityListener extends EntityListener {
 
 		if (owner == null)
 			return;
+
+		taggedMobs.remove(died.getEntityId());
 		
 		if (!plugin.quester.hasQuester(owner.getName()))
 			return;

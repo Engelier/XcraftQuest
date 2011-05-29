@@ -88,21 +88,15 @@ public class XcraftQuestQuester {
 	}
 	
 	public Boolean hasQuester(String name) {
-		if (questers.get(name) == null)
-			return false;
-		else
-			return true;
+		return questers.containsKey(name);
 	}
 	
 	public XcraftQuestQuesterPlayer getQuester(String name) {
-		XcraftQuestQuesterPlayer thisQuester = questers.get(name);
-		
-		if (thisQuester == null) {
-			thisQuester = new XcraftQuestQuesterPlayer(name, plugin);
-			questers.put(name, thisQuester);
+		if (!questers.containsKey(name)) {
+			questers.put(name, new XcraftQuestQuesterPlayer(name, plugin));
 		}
 		
-		return thisQuester;
+		return questers.get(name);
 	}
 	
 	public void showStats(Player player, XcraftQuestQuesterPlayer quester) {

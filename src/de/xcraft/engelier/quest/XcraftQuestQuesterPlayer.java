@@ -31,12 +31,16 @@ public class XcraftQuestQuesterPlayer{
 	}
 	
 	@SuppressWarnings("unchecked")
-	public void checkProgress(String type, String id, Integer done) {
+	public Boolean checkProgress(String type, String id, Integer done) {
+		Boolean ret = false;
+		
 		Map<String, Object> targets = (Map<String, Object>)plugin.quests.quests.getNode(hasQuest + "/targets");
 		for (Map.Entry<String, Object> thisTarget: targets.entrySet()) {
 			Map<String, Object> things = (Map<String, Object>)thisTarget.getValue();
 
 			if (things.get("type").equals(type) && things.get("id").toString().equals(id)) {
+				ret = true;
+				
 				Integer target = (Integer)things.get("amount");
 				if (plugin.config.getBoolean("global/scaleQuestsWithLevel", false))
 					target *= (questLevel + 1);
@@ -63,58 +67,60 @@ public class XcraftQuestQuesterPlayer{
 				}
 			}
 		}
+		
+		return ret;
 	}
 	
 	public void brokeBlock(Integer id) {
 		if (hasQuest == null)
 			return;
 		
-		if (blockBroken.get(id) == null) {
-			blockBroken.put(id, 1);
-		} else {
-			blockBroken.put(id, blockBroken.get(id) + 1);
-		}
+		Integer done = blockBroken.get(id);
 		
-		checkProgress("break", id.toString(), blockBroken.get(id));
+		if (done == null)
+			done = 1;
+		
+		if (checkProgress("break", id.toString(), done))
+			blockBroken.put(id, done);
 	}
 	
 	public void damagedBlock(Integer id) {
 		if (hasQuest == null)
 			return;
 		
-		if (blockDamaged.get(id) == null) {
-			blockDamaged.put(id, 1);
-		} else {
-			blockDamaged.put(id, blockDamaged.get(id) + 1);
-		}
-
-		checkProgress("damage", id.toString(), blockDamaged.get(id));
+		Integer done = blockDamaged.get(id);
+		
+		if (done == null)
+			done = 1;
+		
+		if (checkProgress("damage", id.toString(), done))
+			blockDamaged.put(id, done);
 	}
 	
 	public void placedBlock(Integer id) {
 		if (hasQuest == null)
 			return;
 		
-		if (blockPlaced.get(id) == null) {
-			blockPlaced.put(id, 1);
-		} else {
-			blockPlaced.put(id, blockPlaced.get(id) + 1);
-		}
-
-		checkProgress("place", id.toString(), blockPlaced.get(id));
+		Integer done = blockPlaced.get(id);
+		
+		if (done == null)
+			done = 1;
+		
+		if (checkProgress("place", id.toString(), done))
+			blockPlaced.put(id, done);
 	}
 	
 	public void killedEntity(String id) {
 		if (hasQuest == null)
 			return;
 		
-		if (entityKilled.get(id) == null) {
-			entityKilled.put(id, 1);
-		} else {
-			entityKilled.put(id, entityKilled.get(id) + 1);
-		}
-
-		checkProgress("kill", id, entityKilled.get(id));
+		Integer done = entityKilled.get(id);
+		
+		if (done == null)
+			done = 1;
+		
+		if (checkProgress("kill", id.toString(), done))
+			entityKilled.put(id, done);
 	}
 	
 	public Integer getBlocksBroken(int id) {
