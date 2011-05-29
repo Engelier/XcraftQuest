@@ -2,10 +2,12 @@ package de.xcraft.engelier.quest;
 
 import java.util.*;
 
+import de.xcraft.engelier.utils.Configuration;
+
 public class XcraftQuestQuests {
 	private XcraftQuest plugin = null;
 	
-	public XcraftQuestConfigReader quests = null;
+	public Configuration quests = null;
 	public Map<Integer, List<String>> levelQuests = new HashMap<Integer, List<String>>();
 	
 	public XcraftQuestQuests (XcraftQuest instance) {
@@ -13,7 +15,7 @@ public class XcraftQuestQuests {
 	}
 	
 	public void load() {
-		quests = new XcraftQuestConfigReader();
+		quests = new Configuration();
 		quests.load(plugin.getDataFolder().toString(), "quests.yml");
 		
 		for (String lvl: plugin.config.getKeys("level")) {

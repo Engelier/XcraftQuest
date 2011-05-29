@@ -14,6 +14,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.nijiko.permissions.PermissionHandler;
 import com.nijikokun.register.payment.Method;
 
+import de.xcraft.engelier.utils.Configuration;
+
 public class XcraftQuest extends JavaPlugin {	
 
 	private PluginManager pm = null;
@@ -27,8 +29,8 @@ public class XcraftQuest extends JavaPlugin {
 	public XcraftQuestQuester quester = new XcraftQuestQuester(this);
 	
 	public Logger log = Logger.getLogger("Minecraft");
-	public XcraftQuestConfigReader config = null;
-	public XcraftQuestConfigReader lang = null;
+	public Configuration config = null;
+	public Configuration lang = null;
 	
 	public PermissionHandler permissions = null;
 	public Method ecoMethod = null;
@@ -84,7 +86,7 @@ public class XcraftQuest extends JavaPlugin {
 	}
 	
 	public void loadConfig() {
-		config = new XcraftQuestConfigReader();
+		config = new Configuration();
 		config.load(getDataFolder().toString(), "config.yml");
 	}
 
@@ -95,7 +97,7 @@ public class XcraftQuest extends JavaPlugin {
 			log.severe(getNameBrackets() + "language file for '" + lang + "' not found");;
 		}
 
-		this.lang = new XcraftQuestConfigReader();
+		this.lang = new Configuration();
 		this.lang.load(getDataFolder().toString(), "lang." + lang + ".yml");
 	}
 	

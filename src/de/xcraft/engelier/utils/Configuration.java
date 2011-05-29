@@ -1,4 +1,4 @@
-package de.xcraft.engelier.quest;
+package de.xcraft.engelier.utils;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -12,7 +12,7 @@ import java.util.Map;
 
 import org.yaml.snakeyaml.Yaml;
 
-public class XcraftQuestConfigReader {
+public class Configuration {
 	private File configFile = null;
 	private Map<String, Object> config = new HashMap<String, Object>();
 	
