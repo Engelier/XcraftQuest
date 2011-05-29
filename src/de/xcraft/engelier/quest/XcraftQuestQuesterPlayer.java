@@ -45,6 +45,9 @@ public class XcraftQuestQuesterPlayer{
 				if (plugin.config.getBoolean("global/scaleQuestsWithLevel", false))
 					target *= (questLevel + 1);
 				
+				if (target < 10)
+					return ret;
+				
 				if (type.equals("collect")) {
 					Map<Integer, ? extends ItemStack> inv = getPlayer().getInventory().all(new Integer(id));
 					done = 1;
@@ -58,9 +61,11 @@ public class XcraftQuestQuesterPlayer{
 					
 					message = ChatColor.GOLD + plugin.lang.getString("quest_progress", "Quest progress") + ": ";
 					if (done >= target) {
-						message += ChatColor.YELLOW + done.toString() + "/" + target.toString() + " " + things.get("display"); 					
+						message += ChatColor.YELLOW + "(100%) " + done.toString() + "/" + target.toString() + " " + things.get("display"); 					
 					} else {
-						message += ChatColor.AQUA + done.toString() + ChatColor.WHITE + "/" + target.toString() + " " + things.get("display"); 
+						Double proz = done.doubleValue() / target.doubleValue();
+						
+						message += ChatColor.WHITE + "(" + ChatColor.AQUA + Math.round(proz * 100) + ChatColor.WHITE + "%) " + ChatColor.AQUA + done.toString() + ChatColor.WHITE + "/" + target.toString() + " " + things.get("display"); 
 					}
 
 					getPlayer().sendMessage(message);
@@ -80,7 +85,7 @@ public class XcraftQuestQuesterPlayer{
 		if (done == null)
 			done = 1;
 		
-		if (checkProgress("break", id.toString(), done))
+		if (checkProgress("break", id.toString(), ++done))
 			blockBroken.put(id, done);
 	}
 	
@@ -93,7 +98,7 @@ public class XcraftQuestQuesterPlayer{
 		if (done == null)
 			done = 1;
 		
-		if (checkProgress("damage", id.toString(), done))
+		if (checkProgress("damage", id.toString(), ++done))
 			blockDamaged.put(id, done);
 	}
 	
@@ -106,7 +111,7 @@ public class XcraftQuestQuesterPlayer{
 		if (done == null)
 			done = 1;
 		
-		if (checkProgress("place", id.toString(), done))
+		if (checkProgress("place", id.toString(), ++done))
 			blockPlaced.put(id, done);
 	}
 	
@@ -119,7 +124,7 @@ public class XcraftQuestQuesterPlayer{
 		if (done == null)
 			done = 1;
 		
-		if (checkProgress("kill", id.toString(), done))
+		if (checkProgress("kill", id.toString(), ++done))
 			entityKilled.put(id, done);
 	}
 	
