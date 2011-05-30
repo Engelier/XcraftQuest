@@ -36,5 +36,5 @@ public class XcraftQuestQuests {
 		}
 				
 		plugin.log.info(plugin.getNameBrackets() + "loaded " + quests.getKeys(null).size() + " quests.");
-	}
+	}	
 }
