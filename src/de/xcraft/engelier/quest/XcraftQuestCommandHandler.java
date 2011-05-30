@@ -28,7 +28,7 @@ public class XcraftQuestCommandHandler {
 	public void printAdminUsage(Player player) {
 		player.sendMessage(ChatColor.LIGHT_PURPLE + plugin.getDescription().getFullName() + " by " + plugin.getDescription().getAuthors());
 		player.sendMessage(ChatColor.LIGHT_PURPLE + plugin.lang.getString("admin_commands", "Admin-Commands") + ":");
-		player.sendMessage(ChatColor.LIGHT_PURPLE + "-> " + ChatColor.GREEN + "/quest admin reload " + ChatColor.WHITE + "| " + ChatColor.AQUA + plugin.lang.getString("command_adminhelp_reload", "Reloads the quest file"));
+		player.sendMessage(ChatColor.LIGHT_PURPLE + "-> " + ChatColor.GREEN + "/quest admin reload " + ChatColor.WHITE + "| " + ChatColor.AQUA + plugin.lang.getString("command_adminhelp_reload", "Reloads the configuration"));
 		player.sendMessage(ChatColor.LIGHT_PURPLE + "-> " + ChatColor.GREEN + "/quest admin stats <player> " + ChatColor.WHITE + "| " + ChatColor.AQUA + plugin.lang.getString("command_adminhelp_stats", "Shows stored info for <player>"));
 		player.sendMessage(ChatColor.LIGHT_PURPLE + "-> " + ChatColor.GREEN + "/quest admin setquest <player> <questid> " + ChatColor.WHITE + "| " + ChatColor.AQUA + plugin.lang.getString("command_adminhelp_setquest", "Sets <player>s active quest to <questid>"));
 	}
@@ -82,8 +82,13 @@ public class XcraftQuestCommandHandler {
 				if (!hasPermission(player, "XcraftQuest.admin.reload", true))
 					return plugin.lang.getString("no_permission", "You don't have permission to use this command");
 				
+				plugin.loadConfig();
+				player.sendMessage(plugin.lang.getString("reloaded_config", "Reloaded configuration."));
+				plugin.loadLang(plugin.config.getString("global/lang", "en"));
+				player.sendMessage(plugin.lang.getString("reloaded_lang", "Reloaded language file."));
 				plugin.quests.load();
 				player.sendMessage(plugin.lang.getString("reloaded_quests", "Reloaded all quests."));
+
 			} else if (commandArgs[1].equals("stats")) {
 					if (!hasPermission(player, "XcraftQuest.admin.stats", true))
 						return plugin.lang.getString("no_permission", "You don't have permission to use this command");

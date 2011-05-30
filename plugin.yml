@@ -1,6 +1,6 @@
 name: XcraftQuest
 main: de.xcraft.engelier.quest.XcraftQuest
-version: 0.5
+version: 0.5.1
 author: Engelier
 commands:
   x:
