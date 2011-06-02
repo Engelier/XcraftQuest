@@ -1,8 +1,9 @@
 name: XcraftQuest
 main: de.xcraft.engelier.quest.XcraftQuest
-version: 0.5.1
+version: 1.0rc1
 author: Engelier
 commands:
-  x:
+  quest:
     description: XcraftQuest Command
     usage: /<command>
+    aliases: q

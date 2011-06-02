@@ -75,7 +75,7 @@ public class XcraftQuest extends JavaPlugin {
 	
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		if (cmd.getName().equalsIgnoreCase("x")) {
+		if (cmd.getName().equalsIgnoreCase("quest")) {
 			String error = commandHandler.parse((Player)sender, args);
 			if (error != null)
 				sender.sendMessage(ChatColor.RED + "Error: " + error);
